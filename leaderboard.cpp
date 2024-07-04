@@ -125,17 +125,17 @@ void seirin::Leaderboard::sort()
 
 void seirin::Leaderboard::update()
 {
-  for (auto pos: leaderboard_)
+  for (auto it = leaderboard_.begin(); it != leaderboard_.end(); it++)
   {
-    std::string id = pos.player.id;
+    std::string id = it->player.id;
 
     std::string resp = detail::fetchApiData(std::format("https://api.stratz.com/api/v1/Player/{}", id), apiToken_);
     int medal = parseMedal(resp);
     int rank = parseRank(resp);
 
-    pos.medal = medal / 10;
-    pos.stars = medal % 10;
-    pos.rank = rank;
+    it->medal = medal / 10;
+    it->stars = medal % 10;
+    it->rank = rank;
   }
 
   sort();
